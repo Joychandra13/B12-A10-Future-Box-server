@@ -28,8 +28,22 @@ async function run() {
     const db = client.db("habitTracker")
     const habitCollection = db.collection("habits");
 
+    // All
     app.get("/habits", async (req, res) => {
         const result = await habitCollection.find().toArray()
+      res.send(result);
+    });
+
+    // latest
+    app.get("/latest-habits", async (req, res) => {
+      const result = await habitCollection
+        .find()
+        .sort({ createdAt: -1 })
+        .limit(6)
+        .toArray();
+
+      console.log(result);
+
       res.send(result);
     });
 
