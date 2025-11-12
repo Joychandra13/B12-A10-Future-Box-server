@@ -1,6 +1,6 @@
 const express = require('express')
 const cors = require ('cors')
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 const app = express()
 const port = 3000
@@ -57,6 +57,14 @@ async function run() {
         result,
       });
     });
+
+    // findOne
+    app.get("/habits/:id", async (req, res) => {
+      const id = req.params.id;
+      const result = await habitCollection.findOne({ _id: new ObjectId(id) });
+      res.send(result);
+    });
+
 
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
