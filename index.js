@@ -90,6 +90,17 @@ async function run() {
     });
 
 
+    // delete
+    app.delete("/habits/:id",  async (req, res) => {
+      const { id } = req.params;
+      const result = await habitCollection.deleteOne({ _id: new ObjectId(id) });
+      res.send({
+        success: true,
+        result,
+      });
+    });
+
+
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
