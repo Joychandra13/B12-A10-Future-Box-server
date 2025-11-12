@@ -100,6 +100,21 @@ async function run() {
       });
     });
 
+    // Complete
+    app.post("/habits/complete/:id", async (req, res) => {
+      const { id } = req.params;
+      const today = new Date().toISOString().split("T")[0];
+      
+      const result = await habitCollection.updateOne({ _id: new ObjectId(id), completionHistory: { $ne: today } },
+      { 
+        $push: { completionHistory: today },$inc: { streak: 1 }
+      });
+      res.send({ success: result.modifiedCount > 0 });
+    });
+
+
+
+
 
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
