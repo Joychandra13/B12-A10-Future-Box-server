@@ -47,6 +47,17 @@ async function run() {
       res.send(result);
     });
 
+
+    // post
+    app.post("/habits",   async (req, res) => {
+      const data = req.body;
+      const result = await habitCollection.insertOne(data);
+      res.send({
+        success: true,
+        result,
+      });
+    });
+
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
