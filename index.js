@@ -38,7 +38,7 @@ async function run() {
       const result = await habitCollection
         .find()
         .sort({ createdAt: -1 })
-        .limit(6)
+        .limit(4)
         .toArray();
 
       console.log(result);
